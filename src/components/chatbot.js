@@ -31,7 +31,6 @@ SyntaxHighlighter.registerLanguage("java", java);
 
 // note this is for local test purpose
 //const userHandle = "a48c4f3a-9a5e-4709-a438-4430f8c98e24"
-const sessionId = uuidv4();
 //const courseId = "133ddf17-a77d-4118-b79e-e8bb6ed1d674"
 
 
@@ -40,7 +39,7 @@ const sessionId = uuidv4();
 function Chatbot({props}) {
 
   console.log(props,"in chatbottttt")
-  let {userHandle,courseId,title}=props
+  let {userHandle,courseId,title,sessionId}=props
   const [isOpen, setIsOpen] = useState(true);
   const [moreoption, setmoreoption] = useState(false)
   const [isFetchingResponse, setIsFetchingResponse] = React.useState(false);

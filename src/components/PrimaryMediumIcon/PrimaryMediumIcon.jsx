@@ -8,7 +8,9 @@ import React from "react";
 import { Placeholder } from "../../icons/Placeholder";
 import "./style.css";
 import{useNavigate,Outlet } from "react-router-dom"
+import { v4 as uuidv4 } from "uuid";
 const userHandle = "a48c4f3a-9a5e-4709-a438-4430f8c98e24"
+const sessionId=uuidv4()
 export const PrimaryMediumIcon = ({
   className,
   icon = <Placeholder className="placeholder-instance" />,
@@ -27,9 +29,9 @@ export const PrimaryMediumIcon = ({
           "headers":{
             "Content-Type": "application/json",
           },
-          "body":JSON.stringify({courseId:data.CODELABID,userHandle})
+          "body":JSON.stringify({courseId:data.CODELABID,userHandle,sessionId})
         })
-        Navigate(`/detail_page/${data.CODELABID}/${userHandle}/${data.CODELABTITLE}`)}}>{text}</div>
+        Navigate(`/detail_page/${data.CODELABID}/${userHandle}/${data.CODELABTITLE}/${sessionId}`)}}>{text}</div>
       <Outlet/>
     </div>
   );

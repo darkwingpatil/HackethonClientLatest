@@ -13,7 +13,7 @@ function App() {
       {/* <Chatbot /> */}
       <Routes>
         <Route path={"/"} element={<CodeLabList />}></Route>
-        <Route path={"/detail_page/:courseId/:userHandle/:title"} element={<CodeLab />}></Route>
+        <Route path={"/detail_page/:courseId/:userHandle/:title/:sessionId"} element={<CodeLab />}></Route>
       </Routes>
     </div>
   );

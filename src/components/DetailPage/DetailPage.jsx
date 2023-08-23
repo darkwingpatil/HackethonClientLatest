@@ -5,9 +5,10 @@ import "./style.css";
 import {useParams} from "react-router-dom"
 import Chatbot from "../chatbot";
 
+
 export const CodeLab = () => {
   //courseId/:userHandle/:title
-  const {courseId,userHandle,title}=useParams()
+  const {courseId,userHandle,title,sessionId}=useParams()
   return (
     <div className="code-lab">
       <div className="div">
@@ -53,7 +54,7 @@ export const CodeLab = () => {
           </defs>
         </svg>
 
-        <Chatbot props={{courseId,userHandle,title}}/>
+        <Chatbot props={{courseId,userHandle,title,sessionId}}/>
       </div>
     </div>
   );
