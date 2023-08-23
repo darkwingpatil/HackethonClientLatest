@@ -52,7 +52,7 @@ function Chatbot({props}) {
   const [backContexttitle, setBackContextTitle] = useState(null)
   const [thumbsup, setTumpsup] = useState({})
   const [thumbsdown, setTumpsdown] = useState({})
-
+  const [ipAddress, setIPAddress] = useState('')
   const freqAskQuestions = [
     "Hey there, it’s great to see you! 👋",
     `Ask me anything related to your lab on ${title}`,
@@ -78,10 +78,10 @@ function Chatbot({props}) {
       console.log("Disconnected", socket.id);
     });
 
-    socket.on("queryResponse", ({ response }) => {
+    socket.on("queryResponse", ({ response,sessionId }) => {
       console.log(response);
       setIsFetchingResponse(false);
-      setLastResponse(response);
+      setLastResponse({response,sessionId});
     });
 
     // Clean up the event listeners when the component unmounts
@@ -104,13 +104,23 @@ function Chatbot({props}) {
 
   useEffect(() => {
     const processResponse = (response) => {
+
+      console.log(response,"From server!!")
       if (chatHistory.length > 0) {
         const lastChat = _.last(chatHistory);
+        console.log(lastChat,"understand the game!!")
         const lastChatIndex = chatHistory.length - 1;
-        chatHistory[lastChatIndex] = {
-          ...lastChat,
-          response,
-        };
+
+        if(response.sessionId==sessionId)
+        {
+          chatHistory[lastChatIndex] = {
+            ...lastChat,
+            response:response.response,
+            sessionId:response.sessionId
+          };
+        }
+
+        console.log(chatHistory,"understand the game!!")
 
         // console.log(chatHistory, "this is chathistory")
 
@@ -128,6 +138,8 @@ function Chatbot({props}) {
     setIsOpen(!isOpen);
   };
 
+  console.log(chatHistory,"lssshistory")
+  console.log(sessionId,"SessnionId")
 
   const thumbupHandler = (index, userHandle, sessionId, courseId) => {
     if (thumbsup[`${index}${userHandle}${sessionId}${courseId}`]) {
@@ -176,6 +188,7 @@ function Chatbot({props}) {
     chatHistoryCopy.push({
       query: inputValue,
       response: "",
+      sessionId:sessionId
     });
 
     setChatHistory(chatHistoryCopy);
@@ -415,7 +428,7 @@ function Chatbot({props}) {
                   })
                   :
                   showHistory ? <div>No chat history yet!</div> :
-                    chatHistory.length
+                    chatHistory.length 
                       ? chatHistory.map((chat, index) => (
                         <div key={index} className="chatbox-content">
                           {
