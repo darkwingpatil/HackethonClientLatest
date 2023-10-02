@@ -57,7 +57,7 @@ function Chatbot({ props }) {
 
   const freqAskQuestions = [
     "Hey there, it’s great to see you! 👋",
-    `Ask me anything related to F#`,
+    `Ask me about Plan Management`,
   ];
   //note this api should be hit when from listingpage we are entering into detail page
   // POST localhost:4000/settingContextPromptData
