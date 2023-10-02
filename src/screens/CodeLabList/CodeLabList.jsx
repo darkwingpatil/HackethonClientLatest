@@ -20,7 +20,7 @@ export const CodeLabList = () => {
   }, [])
 
   const fetchData = () => {
-    fetch(`https://seamlesslearning.onrender.com/codelablists`)
+    fetch(`http://localhost:4000/codelablists`)
       .then((res) => res.json())
       .then(({ data }) => {
         setLabList(data);

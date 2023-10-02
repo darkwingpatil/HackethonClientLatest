@@ -11,10 +11,11 @@ function App() {
   return (
     <div className="App">
       {/* <Chatbot /> */}
-      <Routes>
+       <CodeLab/>
+      {/* <Routes>
         <Route path={"/"} element={<CodeLabList />}></Route>
         <Route path={"/detail_page/:courseId/:userHandle/:title/:sessionId"} element={<CodeLab />}></Route>
-      </Routes>
+      </Routes> */}
     </div>
   );
 }

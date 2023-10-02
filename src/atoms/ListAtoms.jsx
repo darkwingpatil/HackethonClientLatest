@@ -6,4 +6,9 @@ export const ListData=atom({
     default:[]
 })
 
+export const ChatHistroyAtom=atom({
+    key:"AtomChatHistory",
+    default:[]
+})
+
 

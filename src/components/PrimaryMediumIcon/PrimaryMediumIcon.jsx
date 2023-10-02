@@ -24,7 +24,7 @@ export const PrimaryMediumIcon = ({
       {icon}
       <div className="label" onClick={()=>{
         console.log(data,"for this is clicked")
-        fetch("https://seamlesslearning.onrender.com/settingContextPromptData",{
+        fetch("http://localhost:4000/settingContextPromptData",{
           "method":"POST",
           "headers":{
             "Content-Type": "application/json",
