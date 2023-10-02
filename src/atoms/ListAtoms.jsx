@@ -11,4 +11,9 @@ export const ChatHistroyAtom=atom({
     default:[]
 })
 
+export const CurrentSessionAtom=atom({
+    key:"SessionId",
+    default:null
+})
+
 

@@ -12,7 +12,8 @@ import thumpsupclicked from "./icons8-thumbs-up-clicked.png"
 import thumpsdown from "./icons8-thumbs-down.png"
 import thumpsdownclicked from "./icons8-thumbs-down-clicked.png"
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import {ChatHistroyAtom} from "../atoms/ListAtoms"
+import { ChatHistroyAtom, CurrentSessionAtom } from "../atoms/ListAtoms"
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import copy from "./icons8-copy.png"
 import { v4 as uuidv4 } from "uuid";
 import "./chatbot.css";
@@ -38,20 +39,21 @@ SyntaxHighlighter.registerLanguage("java", java);
 
 
 
-function Chatbot({props}) {
+function Chatbot({ props }) {
 
-  console.log(props,"in chatbottttt")
-  let {sessionId}=props
+  // console.log(props, "in chatbottttt")
+  let { sessionId } = props
   const [isOpen, setIsOpen] = useState(true);
   const [isFetchingResponse, setIsFetchingResponse] = React.useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [chatHistory, setChatHistory] = useState([]);
+  const [copyState, setcopyState] = useState(false);
 
-  
 
+  // recoil stateManagement controllers
   const setchatHistoryAtom = useSetRecoilState(ChatHistroyAtom);
-
-  const getChatHistoryAtom= useRecoilValue(ChatHistroyAtom);
+  const getChatHistoryAtom = useRecoilValue(ChatHistroyAtom);
+  // const setSeesionAtom = useSetRecoilState(CurrentSessionAtom);
+  // const getSessionAtom = useRecoilValue(CurrentSessionAtom);
 
   const freqAskQuestions = [
     "Hey there, it’s great to see you! 👋",
@@ -68,34 +70,38 @@ function Chatbot({props}) {
   const toggleChatbox = () => {
     setIsOpen(!isOpen);
   };
-
-  console.log(chatHistory,"lssshistory")
-  console.log(sessionId,"SessnionId")
+  // console.log(sessionId, "SessnionId")
 
 
   const handleSubmit = () => {
 
     setIsFetchingResponse(true);
-    fetch('https://fsharpgenaibot.onrender.com/getResponse',{
-      'method':"POST",
+    fetch('https://darkmatterconfluencebot.onrender.com/getResponse', {
+      'method': "POST",
       'headers': {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      'body':JSON.stringify({question:inputValue,sessionId})
-      
+      'body': JSON.stringify({ question: inputValue, sessionId })
+
 
     })
-    .then((res)=>res.json())
-    .then(({data})=>{
-      console.log(data,"llssswingRR")
-      setchatHistoryAtom([...getChatHistoryAtom,{question:inputValue,answer:data.pong}])
-      setIsFetchingResponse(false)
-    })
-    .catch((err)=>{
-      console.log("got error"+ err)
-      //setIsFetchingResponse(false)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data, "llssswingRR")
+        // console.log(data.data.output_text)
+        // console.log(data.sessionId)
+        // console.log(sessionId)
+        setchatHistoryAtom([...getChatHistoryAtom, { question: inputValue, answer: data.data.output_text }])
+        // setSeesionAtom(data.sessionId)
+        setIsFetchingResponse(false)
+      })
+      .catch((err) => {
+        // console.log("got error" + err)
+        //setIsFetchingResponse(false)
+      })
+
+    // console.log(getChatHistoryAtom, "atom state value")
 
     setInputValue("");
   };
@@ -108,7 +114,7 @@ function Chatbot({props}) {
 
 
   const TextWithCodeBlocks = ({ text }) => {
-    console.log(text, "Ssasa")
+    // console.log(text, "Ssasa")
     const codeRegex = /```([\s\S]*?)```/g;
     const codeBlocks = text.split(codeRegex);
 
@@ -184,42 +190,50 @@ function Chatbot({props}) {
             >
               {
 
-getChatHistoryAtom.length && getChatHistoryAtom.length > 0
-                      ? getChatHistoryAtom.map((chat, index) => (
-                        <div key={index} className="chatbox-content">
-                          {
+                //getSessionAtom != null && getSessionAtom == sessionId && 
+                getChatHistoryAtom.length && getChatHistoryAtom.length > 0
+                  ? getChatHistoryAtom.map((chat, index) => (
+                    <div key={index} className="chatbox-content">
+                      {
+                        <>
+                          {chat.question && (
+                            <div className="message-orange">
+                              <p className="message-content">{chat.question}</p>
+                            </div>
+                          )}
+                          {chat.answer && (
                             <>
-                              {chat.query && (
-                                <div className="message-orange">
-                                  <p className="message-content">{chat.question}</p>
-                                </div>
-                              )}
-                              {chat.response && (
-                                <>
-                                  <div className="message-blue">
-                                    <p className="message-content">
-                                      <TextWithCodeBlocks text={chat.answer} />
-                                    </p>
-                                  </div>
-                                  <span className="icon-looks">
-                                    <img src={copy} alt="lab copy" />
-                                  </span>
-                                </>
-                              )}
+                              <div className="message-blue">
+                                <p className="message-content">
+                                  <TextWithCodeBlocks text={chat.answer} />
+                                </p>
+                              </div>
+                              <CopyToClipboard
+                                text={chat.answer}
+                                onCopy={() => setcopyState(true)}>
+                                {/* single child to which event is applied*/}
+
+                                <span className="icon-looks">
+                                <img src={copy} alt="lab copy" />
+                                </span>
+                              </CopyToClipboard>
+   
                             </>
-                          }
-                        </div>
-                      ))
-                      : freqAskQuestions.map((question) => (
-                        <div className="chatbox-faqQuestion">{question}</div>
-                      ))}
+                          )}
+                        </>
+                      }
+                    </div>
+                  ))
+                  : freqAskQuestions.map((question) => (
+                    <div className="chatbox-faqQuestion">{question}</div>
+                  ))}
 
               {isFetchingResponse && <ProfileSkeleton />}
             </InfiniteScroll>
           </div>
           <div style={{ padding: "10px" }}>
 
-            <input id="askHere" placeholder="Ask your question here" type="text" value={inputValue} onChange={(event) => setInputValue(event.target.value)} onKeyDown={handleKeyDown}/> 
+            <input id="askHere" placeholder="Ask your question here" type="text" value={inputValue} onChange={(event) => setInputValue(event.target.value)} onKeyDown={handleKeyDown} disabled={isFetchingResponse} />
             {!isFetchingResponse && (
               <div className="icon" onClick={handleSubmit}>
                 <img

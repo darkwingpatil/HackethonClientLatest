@@ -22,7 +22,7 @@ export const CodeLab = () => {
 
       </div>
       <div className="div">
-        <p className="building">Let's Learn F# Together</p>
+        <p className="building">Unravel the mysteries of plan management</p>
         <div className="overlap">
           <div className="rectangle" />
           <div className="rectangle-2" >
@@ -30,22 +30,22 @@ export const CodeLab = () => {
           </div>
           <div className="rectangle-4" />
           <p className="the-start-state-of">
-            <b>What is F#: </b>F# is a functional-first programming language developed by Microsoft, designed for concise and expressive code.
+            <b>What is Plan Management: </b>Plan management deals with the organization and management of users for B2B customers..
             <br />
             <br />
             <br />
             <br />
-            <b>Why Learn F#:</b> Learning F# enhances problem-solving skills and enables seamless integration of functional and object-oriented paradigms, expanding your programming toolkit.
+            <b>Github link: </b> <a href='https://github.com/ps-dev/plan-management' className="newLiksmatter">plan-management</a>
             <br />
             <br />
             <br />
             <br />
-            <b>Benefits of F#:</b> F# promotes code correctness, scalability, and productivity through immutability, strong typing, and pattern matching.
+            <b>Confluence Link:</b> <a className="newLiksmatter" href='https://pluralsight.atlassian.net/wiki/spaces/PE/pages/2004648065/Plan+Management+Dark+Matter'>Docs</a>
             <br />
             <br />
             <br />
             <br />
-            <b>Developer Benefits:</b> Developers gain improved code maintainability, enhanced parallel programming capabilities, and a deeper understanding of functional programming principles.
+            <b>Slack support:</b> <a className="newLiksmatter" href="https://app.slack.com/client/T02A50N5X/C8ZCWDZ5H">#dev-plan-management</a>
             <br />
             <br />
             <br />
@@ -64,9 +64,9 @@ export const CodeLab = () => {
             <img src={clickhere}/>
           </p>
         </div>
-        <div className="text-wrapper-5">Wing_F#_Tutor</div>
+        <div className="text-wrapper-5">APP_Dark_Matter_Buddy</div>
 
-        <div className="text-wrapper-11">AI-Powered learning mentor</div>
+        <div className="text-wrapper-11">AI-Powered Buddy</div>
         {/* <img className="chatbot" alt="Chatbot" src="chatbot.svg" /> */}
         <svg className="chatbot" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="logo mark">
